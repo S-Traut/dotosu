@@ -1,15 +1,12 @@
 {
   "name": "dotosu",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.1",
+  "description": "Osu file parser library",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "types": "./types/beatmap.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "dotosb": "^1.1.1"
   }

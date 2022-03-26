@@ -1,5 +1,5 @@
-import { loadBeatmap } from './src/parser.js';
+const beatmap = require('./src/beatmap.js');
+const parser = require('./src/parser.js');
 
-export { loadBeatmap } from './src/parser.js';
-
-loadBeatmap('beatmap.osu');
+exports.loadBeatmap = parser.loadbeatmap;
+exports.getTimingAt = beatmap.getTimingAt;
