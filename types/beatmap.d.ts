@@ -1,7 +1,7 @@
 import { Storyboard } from "dotosb"
 
 declare module "dotosu" {
-  function loadBeatmap(path: String): Promise<Beatmap>;
+  function loadBeatmap(path: String): Beatmap;
 
   type Color = {
     r: number,
