@@ -14,15 +14,13 @@ const flags = {
   color: 16 | 32 | 64
 }
 
-async function loadBeatmap(file_path) {
+function loadBeatmap(file_path) {
 
-  var rd = readline.createInterface({
-    input: fs.createReadStream(file_path),
-    console: false
-  });
+  const file = fs.readFileSync(file_path, 'utf-8');
+  const lines = file.split(/\r?\n/);
+
 
   let beatmap = {};
-  let version = undefined;
   let group = undefined;
   let line_number = 0;
   let event_capture = "";
@@ -38,14 +36,13 @@ async function loadBeatmap(file_path) {
     { r: 242, g: 24, b: 57 },
   ];
 
-  rd.on('line', (line) => {
+  for(const line of lines) {
     line_number++;
-    if (line === "" || line == null) return;
+    if (line === "" || line == null) continue;
 
     if (line_number == 1) {
       beatmap.format_number = line.match(/v[0-9]+/)[0];
-      version = beatmap.format_number;
-      return;
+      continue;
     }
 
     let line_group_info = getGroup(line, group);
@@ -56,7 +53,7 @@ async function loadBeatmap(file_path) {
           group === "colours" ||
           group === "hitobjects"
           ? [] : {};
-      return;
+          continue;
     }
 
 
@@ -76,7 +73,7 @@ async function loadBeatmap(file_path) {
 
         if (editor_key === "bookmarks") {
           beatmap.editor.bookmarks = getBookmarks(editor_values[1]);
-          return;
+          continue;
         }
 
         beatmap[group][editor_key] = editor_value;
@@ -89,7 +86,7 @@ async function loadBeatmap(file_path) {
 
         if (metadata_key === "tags") {
           beatmap.metadata.tags = getTags(metadata_value);
-          return;
+          continue;
         }
         beatmap[group][metadata_key] = metadata_value;
         break;
@@ -175,16 +172,8 @@ async function loadBeatmap(file_path) {
       default:
         break;
     }
-  });
-
-  let promise = new Promise(function (resolve, reject) {
-    rd.on('close', () => {
-      beatmap.events = FromString(event_capture);
-      console.log(`Loaded beatmap from ${beatmap.format_number}...`);
-      resolve(beatmap);
-    });
-  });
-  return promise;
+  };
+  return beatmap;
 }
 
 function hasFlag(object, value) {
