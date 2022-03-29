@@ -195,7 +195,7 @@ function getTags(line_data) {
 }
 
 function normalizeValue(value) {
-  return isNaN(parseInt(value)) ? value.trim() : parseInt(value);
+  return Number.isInteger(value) ? parseInt(value): value.trim();
 }
 
 function getGroup(line, current) {

@@ -1,6 +1,6 @@
 {
   "name": "dotosu",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Osu file parser library",
   "main": "index.js",
   "types": "./types/beatmap.d.ts",
